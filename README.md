@@ -46,7 +46,7 @@ console.log(reversedString) // '!dlrow olleh'
 let reversedArray = []
 let i = 0
 
-function reverseString(str) {
+function reverseString (str) {
   reversedArray.unshift(str[i++])
 
   if (i < str.length) {
@@ -54,6 +54,43 @@ function reverseString(str) {
   } else {
     return reversedArray.join('')
   }
+}
+
+reverseString('hello world!') // '!dlrow olleh'
+```
+
+### Fifth
+
+```js
+function reverseString (str) {
+  let arr = []  
+  const iterator = str[Symbol.iterator]()
+  for (let i = 0; i < str.length; i++) {
+    arr.unshift(iterator.next().value)
+  }
+  return arr.join('')
+}
+
+reverseString('hello world!') // '!dlrow olleh'
+```
+
+### Sixth
+
+```js
+function reverseString (str) {
+  let reversedString = ''
+
+  const iterator = (function* (str) {
+    for (let i = str.length - 1; i >= 0; i--) {
+      yield reversedString += str[i]
+    }
+  })(str)
+
+  for (let i = 0; i < str.length; i++) {
+    iterator.next().value
+  }
+
+  return reversedString
 }
 
 reverseString('hello world!') // '!dlrow olleh'
